@@ -1,6 +1,7 @@
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { AuthRequest } from "../../model/AuthRequest";
 import loginValidationSchema from "../../validation/loginValidationSchema";
+import { Link } from "react-router-dom";
 
 function Login() {
   let isLoading = false; // placeholder for hook
@@ -17,13 +18,13 @@ function Login() {
   });
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
+    <div className="d-flex justify-content-center align-items-center bg-dark w-auto">
       <div className="container col-md-4 col-sm-12">
         {isLoading && <p>Loading content</p>}
 
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="login-email" className="form-label mt-3">
+            <label htmlFor="login-email" className="form-label text-white mt-3">
               E-mail
             </label>
             <input
@@ -42,12 +43,12 @@ function Login() {
               </div>
             )}
 
-            <label htmlFor="login-password" className="form-label mt-3">
+            <label htmlFor="login-password" className="form-label text-white mt-3">
               Password
             </label>
             <input
               type="password"
-              className="form-control"
+              className="form-control mb-3"
               id="password"
               placeholder="Enter your password"
               name="password"
@@ -76,7 +77,9 @@ function Login() {
                     Loading...
                 </button>
             )}
-
+          <Link to="/" className="d-block w-auto btn btn-dark mt-5">
+            Back
+          </Link>
           </div>
         </form>
       </div>
