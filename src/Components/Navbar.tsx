@@ -29,10 +29,10 @@ function Navbar() {
         <div className="d-flex" role="search">
           {!isAuthenticated ? (
             <>
-              <NavLink className="btn btn-sm" to="/login">
+              <NavLink className="btn btn-sm text-white" to="/login">
                 Login
               </NavLink>
-              <NavLink className="btn btn-sm" to="/register">
+              <NavLink className="btn btn-sm text-white" to="/register">
                 Register
               </NavLink>
             </>

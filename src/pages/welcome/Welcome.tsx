@@ -1,3 +1,4 @@
+
 function Welcome() {
   return (
     <div className="container welcome">
@@ -7,6 +8,7 @@ function Welcome() {
           <h6>
             <em>Efficiently pay off your debt and unlock your finances</em>
           </h6>
+          <img src="/assets/landing-page1.jpg" className="mt-5 img-fluid rounded" alt="Landing page"/>
         </div>
       </div>
     </div>
