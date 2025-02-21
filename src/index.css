@@ -13,6 +13,10 @@ html,
   flex-direction: column;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 nav {
   background-color: #030d0b !important;
   color: white;

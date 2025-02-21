@@ -5,7 +5,7 @@ function Welcome() {
     <div className="container welcome">
       <div className="mt-2 text-center">
         <div className="d-flex flex-column justify-content-center align-items-center mt-5">
-          <h1><strong>DebtSolver</strong></h1>
+          <h1><strong>DEBTSOLVER</strong></h1>
           <img
             src="/assets/landing-page1.jpg"
             className="mt-3 img-fluid rounded"
@@ -21,7 +21,7 @@ function Welcome() {
             className="mt-5 img-fluid rounded"
             alt="Landing page"
           />
-          <Link to="/login" className="btn btn-dark mt-5 mb-5">
+          <Link to="/login" className="btn btn-lg btn-dark mt-5 mb-5">
             Get started
           </Link>
         </div>

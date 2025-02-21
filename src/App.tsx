@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Router, Routes } from "react-router-dom";
 import "./App.css";
-import Navbar from "./Components/Navbar";
+import Navbar from "./components/Navbar";
 import Welcome from "./pages/welcome/Welcome";
-import Footer from "./Components/Footer";
+import Footer from "./components/Footer";
 import Login from "./pages/login/Login";
 Navigate
 function App() {
