@@ -133,7 +133,7 @@ const Register = () => {
           >
             Clear
           </button>
-          
+
           <p className="mt-5 text-white text-center small fst-italic">
             Already have an account? Click{" "}
             <Link to="/login" className="text-primary">
