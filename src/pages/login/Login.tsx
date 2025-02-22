@@ -18,8 +18,8 @@ function Login() {
   });
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-dark w-auto">
-      <div className="container col-md-4 col-sm-12">
+    <div className="d-flex justify-content-center align-items-center w-auto">
+      <div className="container col-md-4 col-sm-12 bg-dark mt-5 rounded-2 p-4">
         {isLoading && <p>Loading content</p>}
 
         <form onSubmit={formik.handleSubmit}>
@@ -43,7 +43,10 @@ function Login() {
               </div>
             )}
 
-            <label htmlFor="login-password" className="form-label text-white mt-3">
+            <label
+              htmlFor="login-password"
+              className="form-label text-white mt-3"
+            >
               Password
             </label>
             <input
@@ -63,23 +66,37 @@ function Login() {
             )}
 
             {!isLoading && (
-                <button className="btn btn-sm btn-outline-light" type="submit">
-                    Login
-                </button>
+              <button className="btn btn-sm btn-outline-light" type="submit">
+                Login
+              </button>
             )}
 
-            <button className="btn btn-sm btn-outline-light mx-1" type="reset" onClick={formik.handleReset}>
-                Clear
+            <button
+              className="btn btn-sm btn-outline-light mx-1"
+              type="reset"
+              onClick={formik.handleReset}
+            >
+              Clear
             </button>
 
             {isLoading && (
-                <button className="btn btn-sm btn-outline-light" type="submit" disabled>
-                    Loading...
-                </button>
+              <button
+                className="btn btn-sm btn-outline-light"
+                type="submit"
+                disabled
+              >
+                Loading...
+              </button>
             )}
-          <Link to="/" className="d-block w-auto btn btn-dark mt-5">
-            Back
-          </Link>
+            <p className="mt-5 text-white text-center small fst-italic">
+              Need an account? Click{" "}
+              <Link to="/register" className="text-primary">
+                here
+              </Link>
+            </p>
+            <Link to="/" className="d-block w-auto btn btn-dark mt-5">
+              Back
+            </Link>
           </div>
         </form>
       </div>
