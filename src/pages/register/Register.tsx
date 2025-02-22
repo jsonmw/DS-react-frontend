@@ -1,13 +1,11 @@
 import { useFormik } from "formik";
 import { UserAccount } from "../../model/UserAccount";
 import userValidationSchema from "../../validation/userValidationSchema";
-import { CgDanger } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { useRegister } from "../../hooks/useRegister";
 
 const Register = () => {
-  let isLoading = false;
-  let error = false;
-  let toast = null;
+  const { error, isLoading, register, toast } = useRegister();
 
   const formik = useFormik<UserAccount>({
     initialValues: {
@@ -21,6 +19,7 @@ const Register = () => {
       console.log(
         `Account creation attempted for ${userAccount.name} -> ${userAccount.email}`
       );
+      register(userAccount);
       resetForm();
     },
   });
@@ -118,11 +117,15 @@ const Register = () => {
                 </div>
               )}
           </div>
-          {!isLoading && (
-            <button className="btn btn-sm btn-outline-light" type="submit">
-              Register
-            </button>
-          )}
+
+          <button
+            className="btn btn-sm btn-outline-light"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Register"}
+          </button>
+
           <button
             className="btn btn-sm btn-outline-light mx-1"
             type="reset"
@@ -130,15 +133,7 @@ const Register = () => {
           >
             Clear
           </button>
-          {isLoading && (
-            <button
-              className="btn btn-sm btn-outline-light"
-              type="submit"
-              disabled
-            >
-              Loading...
-            </button>
-          )}
+
           <p className="mt-5 text-white text-center small fst-italic">
             Already have an account? Click{" "}
             <Link to="/login" className="text-primary">
