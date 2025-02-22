@@ -5,7 +5,7 @@ import { useLogout } from "../hooks/useLogout";
 import { useEffect } from "react";
 
 function Navbar() {
-  const { isAuthenticated }  = useAuthContext();
+  const { isAuthenticated } = useAuthContext();
   const { logout } = useLogout();
 
   useEffect(() => {
@@ -14,14 +14,14 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container">
-          <div className="d-flex nav-logo me-5 mt-1">
-            <NavLink to="/">
-              <h3 className="text-white">DS </h3>
-            </NavLink>
-          </div>
+        <div className="d-flex nav-logo me-5 mt-1">
+          <NavLink to="/">
+            <h3 className="text-white">DS </h3>
+          </NavLink>
+        </div>
         <div className="d-flex collapse navbar-collapse bg-dark" id="navbarNav">
           <div className="navbar-nav">
-            {isAuthenticated ? ( 
+            {isAuthenticated ? (
               <>
                 <NavLink className="nav-link" to="/">
                   Dashboard
@@ -47,7 +47,7 @@ function Navbar() {
               </NavLink>
             </>
           ) : null}
-          
+
           {isAuthenticated ? (
             <button
               className="btn btn-sm text-white btn-outline-light"

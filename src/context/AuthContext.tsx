@@ -11,9 +11,9 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider: React.FC<React.PropsWithChildren> = ({
-    children,
-  }) => {
-   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+  children,
+}) => {
+  const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
   const updateAuth = (flag: boolean) => {
     setAuthenticated(flag);
   };
@@ -24,10 +24,10 @@ export const AuthContextProvider: React.FC<React.PropsWithChildren> = ({
       setAuthenticated(true);
     }
   }, []);
-  
-    return (
-      <AuthContext.Provider value={{ isAuthenticated, updateAuth }}>
-        {children}
-      </AuthContext.Provider>
-    );
-  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, updateAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
