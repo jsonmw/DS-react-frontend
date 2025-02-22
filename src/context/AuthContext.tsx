@@ -14,20 +14,16 @@ export const AuthContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+  const updateAuth = (flag: boolean) => {
+    setAuthenticated(flag);
+  };
 
   useEffect(() => {
     const authObject = localStorage.getItem("user");
-    setAuthenticated(authObject !== null);
-  }, []);
-
-  const updateAuth = (flag: boolean) => {
-    setAuthenticated(flag);
-    if (flag) {
-      localStorage.setItem("user", "true");
-    } else {
-      localStorage.removeItem("user");
+    if (authObject) {
+      setAuthenticated(true);
     }
-  };
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, updateAuth }}>
