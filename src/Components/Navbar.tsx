@@ -15,9 +15,16 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg">
       <div className="container">
         <div className="d-flex nav-logo me-5 mt-1">
-          <NavLink to="/">
-            <h3 className="text-white">DS </h3>
-          </NavLink>
+          {isAuthenticated ? (
+            <NavLink to="/">
+              {/* TODO: Figure out what I want to be here in logged out/logged in mode -- Full name in logged out? */}
+              <h3 className="text-white">DS </h3>
+            </NavLink>
+          ) : (
+            <NavLink to="/">
+              <h3 className="text-white">DS </h3>   
+            </NavLink>
+          )}
         </div>
         <div className="d-flex collapse navbar-collapse bg-dark" id="navbarNav">
           <div className="navbar-nav">
