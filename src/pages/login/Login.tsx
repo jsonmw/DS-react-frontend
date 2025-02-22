@@ -65,11 +65,13 @@ function Login() {
               </div>
             )}
 
-            {!isLoading && (
-              <button className="btn btn-sm btn-outline-light" type="submit">
-                Login
-              </button>
-            )}
+            <button
+              className="btn btn-sm btn-outline-light"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Register"}
+            </button>
 
             <button
               className="btn btn-sm btn-outline-light mx-1"
@@ -78,16 +80,7 @@ function Login() {
             >
               Clear
             </button>
-
-            {isLoading && (
-              <button
-                className="btn btn-sm btn-outline-light"
-                type="submit"
-                disabled
-              >
-                Loading...
-              </button>
-            )}
+            
             <p className="mt-5 text-white text-center small fst-italic">
               Need an account? Click{" "}
               <Link to="/register" className="text-primary">
