@@ -14,7 +14,6 @@ export const useLogin = () => {
     setLoader(true);
     authenticate(authRequest)
       .then((response) => {
-        console.log(response);
         localStorage.setItem("user", JSON.stringify(response.data));
         updateAuth(true);
         navigate("/");
