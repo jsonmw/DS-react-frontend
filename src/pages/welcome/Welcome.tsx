@@ -21,7 +21,7 @@ function Welcome() {
             className="mt-5 img-fluid rounded"
             alt="Landing page"
           />
-          <Link to="/login" className="btn btn-lg btn-dark mt-5 mb-5">
+          <Link to="/register" className="btn btn-lg btn-dark mt-5 mb-5">
             Get started
           </Link>
         </div>
