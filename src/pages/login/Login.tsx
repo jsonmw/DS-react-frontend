@@ -2,9 +2,10 @@ import { useFormik } from "formik";
 import { AuthRequest } from "../../model/AuthRequest";
 import loginValidationSchema from "../../validation/loginValidationSchema";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 function Login() {
-  let isLoading = false; // placeholder for hook
+  const { login, isLoading, error } = useLogin();
 
   const formik = useFormik<AuthRequest>({
     initialValues: {
@@ -14,6 +15,7 @@ function Login() {
     validationSchema: loginValidationSchema,
     onSubmit: (authRequest: AuthRequest) => {
       console.log("Attempting to login user:", authRequest.email);
+      login(authRequest);
     },
   });
 
@@ -21,6 +23,7 @@ function Login() {
     <div className="d-flex justify-content-center align-items-center w-auto">
       <div className="container col-md-4 col-sm-12 bg-dark mt-5 rounded-2 p-4">
         {isLoading && <p>Loading content</p>}
+        {error && <p className="text-danger">{error}</p>}
 
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-3">
@@ -80,7 +83,7 @@ function Login() {
             >
               Clear
             </button>
-            
+
             <p className="mt-5 text-white text-center small fst-italic">
               Need an account? Click{" "}
               <Link to="/register" className="text-primary">
