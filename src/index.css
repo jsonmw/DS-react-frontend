@@ -50,3 +50,13 @@ footer {
   padding: 10px 0;
   width: 100%;
 }
+
+/* DebtCard */
+
+.debt-card {
+  transition: background-color 0.3s ease-in-out;
+}
+
+.debt-card:hover {
+  background-color: #ffc107 !important;
+}

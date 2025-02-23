@@ -5,7 +5,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/AppNavbar";
 
 const AppRoutes = () => {
   return (
