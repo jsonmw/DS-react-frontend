@@ -15,11 +15,15 @@ function AppNavbar() {
   return (
     <Navbar expand="lg" bg="dark" variant="dark" className="shadow-sm">
       <Container>
-        {/* Left-aligned Logo */}
-        <Navbar.Brand as={NavLink} to="/" className="fw-bold">
-          DEBTSOLVER
-        </Navbar.Brand>
-
+        {isAuthenticated ? (
+          <Navbar.Brand as={NavLink} to="/" className="fw-bold">
+            DEBTSOLVER
+          </Navbar.Brand>
+        ) : (
+          <Navbar.Brand as={NavLink} to="/" className="fw-bold">
+            DS
+          </Navbar.Brand>
+        )}
         {/* Toggle Button for Mobile View */}
         <Navbar.Toggle aria-controls="navbarNav">
           <FaBars color="white" />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import GetStartedModal from "../../components/GetStartedModal";
 import DebtCard from "../../components/DebtCard";
@@ -17,10 +17,13 @@ const Dashboard = () => {
     { name: "Chase VISA", debtType: "Card", description: "", balance: 2500, apr: 9.2 },
     { name: "Mortgage", debtType: "Loan", description: "", balance: 375350, apr: 4.4 },
   ];
-
-  const totalDebt = debts.reduce((acc: number, debt: Debt) => acc + debt.balance, 0);
   let error = false;
   let isLoading = false;
+
+  const totalDebt = useMemo(() => {
+    return debts.reduce((acc: number, debt: Debt) => acc + debt.balance, 0);
+  }, [debts]);
+  
 
   useEffect(() => {
     if (localStorage.getItem("firstLogin") === "true") {

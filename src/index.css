@@ -3,7 +3,7 @@
 body,
 html,
 #root {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif !important;
   font-weight: 400;
   font-size: 1.1em;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -16,6 +16,18 @@ html,
 a {
   text-decoration: none !important;
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it covers the full viewport */
+}
+
+.content {
+  flex: 1; /* Allow it to take up remaining space */
+  overflow-y: auto; /* Enable scrolling when needed */
+}
+
 
 nav {
   background-color: #030d0b !important;
@@ -49,6 +61,13 @@ footer {
   text-align: center;
   padding: 10px 0;
   width: 100%;
+}
+
+.btn-dark {
+  background-color: black !important;
+}
+.btn-dark:hover {
+  background-color: #333 !important; /* Darker shade for hover */
 }
 
 /* DebtCard */
