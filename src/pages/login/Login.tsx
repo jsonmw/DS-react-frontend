@@ -1,21 +1,26 @@
 import { useFormik } from "formik";
 import { AuthRequest } from "../../model/AuthRequest";
 import loginValidationSchema from "../../validation/loginValidationSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 
 function Login() {
   const { login, isLoading, error } = useLogin();
-
+  const navigate = useNavigate();
   const formik = useFormik<AuthRequest>({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: (authRequest: AuthRequest) => {
+    onSubmit: async (authRequest: AuthRequest) => {
       console.log("Attempting to login user:", authRequest.email);
-      login(authRequest);
+      
+      const success = await login(authRequest);
+      
+      if (success) {
+        setTimeout(() => navigate("/"), 2000);
+      }
     },
   });
 

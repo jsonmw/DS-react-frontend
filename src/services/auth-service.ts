@@ -4,13 +4,13 @@ import { AuthResponse } from "../model/AuthResponse";
 import { UserAccount } from "../model/UserAccount";
 
 export const createUserAccount = (userAccount: UserAccount) => {
-    return apiClient.post<UserAccount>("/register", userAccount);
+  return apiClient.post<UserAccount>("/register", userAccount);
 };
 
 export const authenticate = (authRequest: AuthRequest) => {
-    return apiClient.post<AuthResponse>("/login", authRequest);
-}
+  return apiClient.post<AuthResponse>("/login", authRequest);
+};
 
 export const signout = () => {
-    return apiClient.post<void>("/logout");
-}
+  return apiClient.post<void>("/logout");
+};
