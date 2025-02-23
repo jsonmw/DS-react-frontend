@@ -1,12 +1,12 @@
 import { useFormik } from "formik";
 import { UserAccount } from "../../model/UserAccount";
 import userValidationSchema from "../../validation/userValidationSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../../hooks/useRegister";
 
 const Register = () => {
   const { error, isLoading, register, toast } = useRegister();
-
+  const navigate = useNavigate();
   const formik = useFormik<UserAccount>({
     initialValues: {
       name: "",
@@ -15,11 +15,19 @@ const Register = () => {
       confirmPassword: "",
     },
     validationSchema: userValidationSchema,
-    onSubmit: (userAccount: UserAccount, { resetForm }) => {
+    onSubmit: async (userAccount: UserAccount, { resetForm }) => {
       console.log(
         `Account creation attempted for ${userAccount.name} -> ${userAccount.email}`
       );
-      register(userAccount);
+
+      const success: boolean = await register(userAccount);
+
+      if (success) {
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); // 2 seconds before redirect
+      }
+
       resetForm();
     },
   });

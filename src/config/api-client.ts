@@ -9,11 +9,9 @@ const apiClient = axios.create({
 });
 
 // Helper function to get active JWT if any
-const getAuthToken = (): string | null => {
+export const getAuthToken = (): string | null => {
   const authObject = localStorage.getItem("user");
   if (!authObject) return null;
-
-  console.log(authObject);
 
   try {
     const { token } = JSON.parse(authObject) as AuthResponse;
@@ -35,7 +33,7 @@ apiClient.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
-        delete config.headers.Authorization;  
+        delete config.headers.Authorization;
       }
     }
 
