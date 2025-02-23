@@ -5,40 +5,44 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/AppNavbar";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-      <Footer />
+      <div className="app-container">
+        <Navbar />
+        <div className="content">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 };

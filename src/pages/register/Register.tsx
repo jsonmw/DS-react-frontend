@@ -1,12 +1,18 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { UserAccount } from "../../model/UserAccount";
 import userValidationSchema from "../../validation/userValidationSchema";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../../hooks/useRegister";
+import { Container, Form, Button, Card, Alert, Row, Col, InputGroup, Nav } from "react-bootstrap";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 
 const Register = () => {
   const { error, isLoading, register, toast } = useRegister();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const formik = useFormik<UserAccount>({
     initialValues: {
       name: "",
@@ -25,7 +31,7 @@ const Register = () => {
       if (success) {
         setTimeout(() => {
           navigate("/");
-        }, 2000); // 2 seconds before redirect
+        }, 2000);
       }
 
       resetForm();
@@ -33,127 +39,123 @@ const Register = () => {
   });
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div className="container col-md-4 col-sm-12 bg-dark mt-5 rounded-2 p-4">
-        {isLoading && <p>Loading...</p>}
-        {error && <p className="text-danger">{error}</p>}
-        {toast && <p className="text-primary">{toast}</p>}
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Row className="w-100 justify-content-center">
+        <Col xs={12} md={8} lg={6}>
+          <Card bg="dark" text="white" className="p-4">
+            <Card.Body>
+              {isLoading && <Alert variant="info">Loading...</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {toast && <Alert variant="primary">{toast}</Alert>}
 
-        <form onSubmit={formik.handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="register-name" className="form-label text-white">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="register-name"
-              placeholder="Enter your name"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.name && formik.errors.name && (
-              <div className="text-danger fst-italic">{formik.errors.name}</div>
-            )}
+              <Form onSubmit={formik.handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your name"
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={!!(formik.touched.name && formik.errors.name)}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.name}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <label
-              htmlFor="register-email"
-              className="form-label text-white mt-4"
-            >
-              E-mail
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="register-email"
-              placeholder="Enter your e-mail"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.email && formik.errors.email && (
-              <div className="text-danger fst-italic">
-                {formik.errors.email}
-              </div>
-            )}
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter your email"
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={!!(formik.touched.email && formik.errors.email)}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <label
-              htmlFor="register-password"
-              className="form-label text-white mt-4"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="register-password"
-              placeholder="Enter your password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-danger fst-italic">
-                {formik.errors.password}
-              </div>
-            )}
+                {/* Password Field with Toggle */}
+                <Form.Group className="mb-3">
+                  <Form.Label>Password</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      isInvalid={!!(formik.touched.password && formik.errors.password)}
+                    />
+                    <Button
+                      variant="outline-light"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeSlash /> : <Eye />}
+                    </Button>
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.password}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
 
-            <label
-              htmlFor="register-confirmPassword"
-              className="form-label text-white mt-4"
-            >
-              Confirm password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="register-confirmPassword"
-              placeholder="Confirm password"
-              name="confirmPassword"
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.confirmPassword &&
-              formik.errors.confirmPassword && (
-                <div className="text-danger fst-italic">
-                  {formik.errors.confirmPassword}
+                {/* Confirm Password Field with Toggle */}
+                <Form.Group className="mb-3">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm password"
+                      name="confirmPassword"
+                      value={formik.values.confirmPassword}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      isInvalid={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
+                    />
+                    <Button
+                      variant="outline-light"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? <EyeSlash /> : <Eye />}
+                    </Button>
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.confirmPassword}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+
+                <div className="d-flex gap-2">
+                  <Button variant="outline-light" size="sm" type="submit" disabled={isLoading}>
+                    {isLoading ? "Loading..." : "Register"}
+                  </Button>
+                  <Button variant="outline-light" size="sm" type="reset" onClick={formik.handleReset}>
+                    Clear
+                  </Button>
                 </div>
-              )}
-          </div>
 
-          <button
-            className="btn btn-sm btn-outline-light"
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Register"}
-          </button>
+                <p className="mt-3 text-center small text-white fst-italic">
+                  Already have an account? Click{" "}
+                  <Link to="/login" className="text-primary">
+                    here
+                  </Link>
+                </p>
+              </Form>
 
-          <button
-            className="btn btn-sm btn-outline-light mx-1"
-            type="reset"
-            onClick={formik.handleReset}
-          >
-            Clear
-          </button>
-
-          <p className="mt-5 text-white text-center small fst-italic">
-            Already have an account? Click{" "}
-            <Link to="/login" className="text-primary">
-              here
-            </Link>
-          </p>
-        </form>
-        <Link to="/" className="d-block w-auto btn btn-dark mt-5">
-          Back
-        </Link>
-      </div>
-    </div>
+              <Nav.Link as={Link} to="/" className="btn btn-dark border border-light px-4 py-2 mt-3 mb-3">
+                Back
+              </Nav.Link>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -1,32 +1,37 @@
+import { Container, Row, Col, Image, Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function Welcome() {
   return (
-    <div className="container welcome">
-      <div className="mt-2 text-center">
-        <div className="d-flex flex-column justify-content-center align-items-center mt-5">
-          <h1><strong>DEBTSOLVER</strong></h1>
-          <img
+    <Container className="text-center welcome mt-5">
+      <Row className="justify-content-center">
+        <Col xs={12} md={10} lg={12}>
+          <h1 className="fw-bold">DEBTSOLVER</h1>
+          <Image
             src="/assets/landing-page1.jpg"
-            className="mt-3 img-fluid rounded"
+            className="mt-3 rounded img-fluid"
             alt="Landing page"
           />
-          <h5 className="mt-5">
-            <em>
-              Unlock your finances by tracking your debts and planning your repayment
-            </em>
+          <h5 className="mt-5 fst-italic">
+            Unlock your finances by tracking your debts and planning your
+            repayment
           </h5>
-          <img
+          <Image
             src="/assets/landing-page2.jpg"
-            className="mt-5 img-fluid rounded"
+            className="mt-5 rounded img-fluid"
             alt="Landing page"
           />
-          <Link to="/register" className="btn btn-lg btn-dark mt-5 mb-5">
-            Get started
-          </Link>
-        </div>
-      </div>
-    </div>
+          <Nav.Link
+            as={Link}
+            to="/register"
+            className="btn btn-dark border border-light px-4 py-2 mt-5 mb-5 d-inline-block"
+            style={{ backgroundColor: "black" }}
+          >
+            Get Started
+          </Nav.Link>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
