@@ -1,12 +1,9 @@
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-
 import PublicRoute from "./PublicRoute";
-
 import Dashboard from "../pages/dashboard/Dashboard";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
-import { AuthContextProvider } from "../context/AuthContext";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
