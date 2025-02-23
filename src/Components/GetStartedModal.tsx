@@ -10,7 +10,6 @@ const GetStartedModal: React.FC<GetStartedModalProps> = ({ onClose }) => {
 
     const slides = [
         { title: "Welcome to DebtSolver", content: "Let's go over some quick tips to get you started.", image: ""},
-        { title: "Update Your Profile", content: "Click on your profile picture to add details.", image: "" },
         { title: "Using the Dashboard", content: "The dashboard let's you view all debts.", image: "" },
         { title: "Creating new Debts", content: "Click New Debt to add a new Card or Bank Loan.", image: "" },
         { title: "You're All Set!", content: "Get started!" }
