@@ -17,7 +17,7 @@ const debtValidationSchema = Yup.object({
     then: (schema) => schema.required("Card Type is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  terms: Yup.string().when("debtType", {
+  loanTerms: Yup.string().when("debtType", {
     is: "LOAN",
     then: (schema) => schema.required("Terms are required"),
     otherwise: (schema) => schema.notRequired(),
