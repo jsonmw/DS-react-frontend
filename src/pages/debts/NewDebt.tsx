@@ -33,35 +33,37 @@ const NewDebt = () => {
 
   // Check if a debt ID was passed and populate fields with existing data if so
   useEffect(() => {
-    if (!id) return;
-
-    setLoader(true);
-    const debtId = parseInt(id);
-
-    getDebtByDebtId(debtId)
-      .then((response) => {
-        if (response && response.data) {
+    const fetchDebt = async () => {
+      if (!id) return;
+      setLoader(true);
+  
+      try {
+        const debtId = parseInt(id);
+        const response = await getDebtByDebtId(debtId);
+        if (response?.data) {
           setInitialValues(response.data);
           formik.setValues(response.data);
         }
-      })
-      .catch((error: any) => setError(error.message))
-      .finally(() => setLoader(false));
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoader(false);
+      }
+    };
+  
+    fetchDebt();
   }, [id]);
 
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
     onSubmit: (values: Debt) => {
-        console.log("submit clicked")
-        console.log(`Debt ID: ${id} values: ${values} `);
       const filteredValues = {
         ...values,
         cardType: values.debtType === "CARD" ? values.cardType : undefined,
         loanTerms: values.debtType === "LOAN" ? values.loanTerms : undefined,
       };
 
-      console.log("Submitting:", filteredValues);
       saveOrUpdateDebt(filteredValues)
         .then((response) => {
           if (response && response.status === 201) {
