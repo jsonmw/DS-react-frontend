@@ -13,9 +13,9 @@ const Dashboard = () => {
   
   // Remove when API fetch implemented
   const debts: Debt[] = [
-    { name: "Honda Civic lease", debtType: "Loan", description: "", balance: 12000, apr: 7.3 },
-    { name: "Chase VISA", debtType: "Card", description: "", balance: 2500, apr: 9.2 },
-    { name: "Mortgage", debtType: "Loan", description: "", balance: 375350, apr: 4.4 },
+    { id: 1, name: "Honda Civic lease", debtType: "Loan", description: "", balance: 12000, apr: 7.3 },
+    { id: 2, name: "Chase VISA", debtType: "Card", description: "", balance: 2500, apr: 9.2 },
+    { id: 3, name: "Mortgage", debtType: "Loan", description: "", balance: 375350, apr: 4.4 },
   ];
   let error = false;
   let isLoading = false;
