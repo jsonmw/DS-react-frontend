@@ -5,4 +5,6 @@ export interface Debt {
     apr: number;
     balance: number;
     description: string;
+    cardType?: string,
+    loanTerms?: string,
 }

@@ -4,7 +4,17 @@ import { UserAccount } from "../../model/UserAccount";
 import userValidationSchema from "../../validation/userValidationSchema";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../../hooks/useRegister";
-import { Container, Form, Button, Card, Alert, Row, Col, InputGroup, Nav } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Card,
+  Alert,
+  Row,
+  Col,
+  InputGroup,
+  Nav,
+} from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 
 const Register = () => {
@@ -92,7 +102,9 @@ const Register = () => {
                       value={formik.values.password}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      isInvalid={!!(formik.touched.password && formik.errors.password)}
+                      isInvalid={
+                        !!(formik.touched.password && formik.errors.password)
+                      }
                     />
                     <Button
                       variant="outline-light"
@@ -117,11 +129,18 @@ const Register = () => {
                       value={formik.values.confirmPassword}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      isInvalid={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
+                      isInvalid={
+                        !!(
+                          formik.touched.confirmPassword &&
+                          formik.errors.confirmPassword
+                        )
+                      }
                     />
                     <Button
                       variant="outline-light"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                     >
                       {showConfirmPassword ? <EyeSlash /> : <Eye />}
                     </Button>
@@ -132,10 +151,20 @@ const Register = () => {
                 </Form.Group>
 
                 <div className="d-flex gap-2">
-                  <Button variant="outline-light" size="sm" type="submit" disabled={isLoading}>
+                  <Button
+                    variant="outline-light"
+                    size="sm"
+                    type="submit"
+                    disabled={isLoading}
+                  >
                     {isLoading ? "Loading..." : "Register"}
                   </Button>
-                  <Button variant="outline-light" size="sm" type="reset" onClick={formik.handleReset}>
+                  <Button
+                    variant="outline-light"
+                    size="sm"
+                    type="reset"
+                    onClick={formik.handleReset}
+                  >
                     Clear
                   </Button>
                 </div>
@@ -148,7 +177,11 @@ const Register = () => {
                 </p>
               </Form>
 
-              <Nav.Link as={Link} to="/" className="btn btn-dark border border-light px-4 py-2 mt-3 mb-3">
+              <Nav.Link
+                as={Link}
+                to="/"
+                className="btn btn-dark border border-light px-4 py-2 mt-3 mb-3"
+              >
                 Back
               </Nav.Link>
             </Card.Body>

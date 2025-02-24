@@ -12,6 +12,16 @@ const debtValidationSchema = Yup.object({
     .required("Balance is required")
     .positive("Balance must be positive"),
   description: Yup.string(),
+  cardType: Yup.string().when("debtType", {
+    is: "CARD",
+    then: (schema) => schema.required("Card Type is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  terms: Yup.string().when("debtType", {
+    is: "LOAN",
+    then: (schema) => schema.required("Terms are required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 export default debtValidationSchema;
