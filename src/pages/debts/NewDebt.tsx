@@ -88,6 +88,7 @@ const NewDebt = () => {
     return (
       <>
         <FormInput label="APR" name="apr" type="number" formik={formik} />
+        
         <FormInput
           label="Balance"
           name="balance"
@@ -101,7 +102,7 @@ const NewDebt = () => {
           formik={formik}
         />
 
-        {formik.values.debtType === "CARD" && (
+        {/* {formik.values.debtType === "CARD" && (
           <Form.Group className="mb-3">
             <Form.Label>Card Type</Form.Label>
             <Form.Select
@@ -122,11 +123,24 @@ const NewDebt = () => {
               {formik.errors.cardType}
             </Form.Control.Feedback>
           </Form.Group>
-        )}
+        )} */}
 
-        {formik.values.debtType === "LOAN" && (
-          <FormInput label="Loan Terms" name="loanTerms" formik={formik} />
-        )}
+<FormInput
+                  label="Card Type"
+                  name="cardType"
+                  formik={formik}
+                  options={cardTypes}
+                />
+
+          {/* Loan Term Input (Only for LOAN Type) */}
+          {formik.values.debtType === "LOAN" && (
+            <FormInput
+              label="Loan Term"
+              name="loanTerms"
+              formik={formik}
+              loanTermUnitOptions={["months", "years"]}
+            />
+          )}
       </>
     );
   };

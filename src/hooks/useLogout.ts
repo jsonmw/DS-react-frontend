@@ -11,19 +11,19 @@ export const useLogout = () => {
 
   const logout = useCallback(async () => {
     setLoader(true);
-  
+
     const user = localStorage.getItem("user");
     const token = user ? JSON.parse(user).token : null;
-  
+
     if (!token) {
       setError("No user logged in");
       setLoader(false);
       return;
     }
-  
+
     try {
       const response = await signout();
-      
+
       if (response && response.status === 204) {
         localStorage.clear();
         updateAuth(false);
@@ -37,7 +37,7 @@ export const useLogout = () => {
     } finally {
       setLoader(false);
     }
-  }, [updateAuth, navigate]); 
+  }, [updateAuth, navigate]);
 
   return { logout };
 };
