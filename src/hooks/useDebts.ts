@@ -17,8 +17,9 @@ const useDebts = () => {
       if (!response?.data) {
         throw new Error("Attempt to query debts failed.");
       }
-      // stuff
-      console.log("Received ", JSON.stringify(response.data));
+      console.log(
+        `Debt query successful. ${response.data.length} debts retrieved`
+      );
       setDebts(response.data);
     } catch (error: any) {
       setError(

@@ -7,7 +7,6 @@ import { authenticate } from "../services/auth-service";
 export const useLogin = () => {
   const [error, setError] = useState<string>("");
   const [isLoading, setLoader] = useState<boolean>(false);
-  const navigate = useNavigate();
   const { updateAuth } = useAuthContext();
 
   const login = useCallback(

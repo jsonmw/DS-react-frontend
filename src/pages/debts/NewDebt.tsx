@@ -13,8 +13,10 @@ import {
   Alert,
   Button,
   Nav,
+  Spinner,
 } from "react-bootstrap";
 import { cardTypes, debtTypes } from "../../utils/Constants";
+import FormInput from "../../components/FormInput";
 
 const NewDebt = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,35 +35,37 @@ const NewDebt = () => {
 
   // Check if a debt ID was passed and populate fields with existing data if so
   useEffect(() => {
-    if (!id) return;
+    const fetchDebt = async () => {
+      if (!id) return;
+      setLoader(true);
 
-    setLoader(true);
-    const debtId = parseInt(id);
-
-    getDebtByDebtId(debtId)
-      .then((response) => {
-        if (response && response.data) {
+      try {
+        const debtId = parseInt(id);
+        const response = await getDebtByDebtId(debtId);
+        if (response?.data) {
           setInitialValues(response.data);
           formik.setValues(response.data);
         }
-      })
-      .catch((error: any) => setError(error.message))
-      .finally(() => setLoader(false));
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoader(false);
+      }
+    };
+
+    fetchDebt();
   }, [id]);
 
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
     onSubmit: (values: Debt) => {
-        console.log("submit clicked")
-        console.log(`Debt ID: ${id} values: ${values} `);
       const filteredValues = {
         ...values,
         cardType: values.debtType === "CARD" ? values.cardType : undefined,
         loanTerms: values.debtType === "LOAN" ? values.loanTerms : undefined,
       };
 
-      console.log("Submitting:", filteredValues);
       saveOrUpdateDebt(filteredValues)
         .then((response) => {
           if (response && response.status === 201) {
@@ -78,6 +82,69 @@ const NewDebt = () => {
     validationSchema: debtValidationSchema,
   });
 
+  const renderDebtSpecificFields = () => {
+    if (!formik.values.debtType) return null;
+
+    return (
+      <>
+        <FormInput label="APR" name="apr" type="number" formik={formik} />
+        
+        <FormInput
+          label="Balance"
+          name="balance"
+          type="number"
+          formik={formik}
+        />
+        <FormInput
+          label="Description"
+          name="description"
+          type="textarea"
+          formik={formik}
+        />
+
+        {/* {formik.values.debtType === "CARD" && (
+          <Form.Group className="mb-3">
+            <Form.Label>Card Type</Form.Label>
+            <Form.Select
+              name="cardType"
+              value={formik.values.cardType}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              isInvalid={!!(formik.touched.cardType && formik.errors.cardType)}
+            >
+              <option value="">Select a Card Type</option>
+              {cardTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.cardType}
+            </Form.Control.Feedback>
+          </Form.Group>
+        )} */}
+
+<FormInput
+                  label="Card Type"
+                  name="cardType"
+                  formik={formik}
+                  options={cardTypes}
+                />
+
+          {/* Loan Term Input (Only for LOAN Type) */}
+          {formik.values.debtType === "LOAN" && (
+            <FormInput
+              label="Loan Term"
+              name="loanTerms"
+              formik={formik}
+              loanTermUnitOptions={["months", "years"]}
+            />
+          )}
+      </>
+    );
+  };
+
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Row className="w-100 justify-content-center">
@@ -89,166 +156,27 @@ const NewDebt = () => {
 
               <Form key={formik.values.debtType} onSubmit={formik.handleSubmit}>
                 {/* Name */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Debt Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter debt name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={!!(formik.touched.name && formik.errors.name)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.name}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                {/* Debt Type Drop Down */}
-                <Form.Group controlId="debtType">
-                  <Form.Label>Debt Type</Form.Label>
-                  <Form.Select
-                    name="debtType"
-                    value={formik.values.debtType}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={
-                      !!formik.errors.debtType && formik.touched.debtType
-                    }
-                  >
-                    <option value="">Select Debt Type</option>
-                    {debtTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.debtType}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                {/* Conditionally Rendered Fields */}
-                {formik.values.debtType && (
-                  <>
-                    {/* APR */}
-                    <Form.Group className="mb-3">
-                      <Form.Label>APR</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Enter the APR"
-                        name="apr"
-                        value={formik.values.apr}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        isInvalid={!!(formik.touched.apr && formik.errors.apr)}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.apr}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-
-                    {/* Balance */}
-                    <Form.Group className="mb-3">
-                      <Form.Label>Balance</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Enter the remaining balance"
-                        name="balance"
-                        value={formik.values.balance}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        isInvalid={
-                          !!(formik.touched.balance && formik.errors.balance)
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.balance}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-
-                    {/* Description */}
-                    <Form.Group className="mb-3">
-                      <Form.Label>Description</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        placeholder="Enter a description"
-                        name="description"
-                        value={formik.values.description}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        isInvalid={
-                          !!(
-                            formik.touched.description &&
-                            formik.errors.description
-                          )
-                        }
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.description}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                    {/* Card Type (if CARD is selected) */}
-                    {formik.values.debtType === "CARD" && (
-                      <Form.Group className="mb-3">
-                        <Form.Label>Card Type</Form.Label>
-                        <Form.Select
-                          name="cardType"
-                          value={formik.values.cardType}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={
-                            !!(
-                              formik.touched.cardType && formik.errors.cardType
-                            )
-                          }
-                        >
-                          <option value="">Select a Card Type</option>
-                          {cardTypes.map((type) => (
-                            <option key={type} value={type}>
-                              {type}
-                            </option>
-                          ))}
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {formik.errors.cardType}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-
-                    {/* Loan loanTerms (if LOAN is selected) */}
-                    {formik.values.debtType === "LOAN" && (
-                      <Form.Group className="mb-3">
-                        <Form.Label>Loan Terms</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter loan terms"
-                          name="loanTerms"
-                          value={formik.values.loanTerms}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={
-                            !!(formik.touched.loanTerms && formik.errors.loanTerms)
-                          }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formik.errors.loanTerms}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    )}
-                  </>
-                )}
+                <FormInput
+                  label="Name"
+                  name="name"
+                  type="text"
+                  formik={formik}
+                />
+                <FormInput
+                  label="Debt Type"
+                  name="debtType"
+                  formik={formik}
+                  options={debtTypes}
+                />
+                {renderDebtSpecificFields()}
 
                 <div className="d-flex gap-2">
-                  <Button
-                    variant="outline-light"
-                    size="sm"
-                    type="submit"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Save"}
+                  <Button variant="outline-light" size="sm" type="submit">
+                    {isLoading ? (
+                      <Spinner animation="border" size="sm" />
+                    ) : (
+                      "Save"
+                    )}
                   </Button>
                   <Button
                     variant="outline-light"

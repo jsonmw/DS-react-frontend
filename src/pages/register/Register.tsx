@@ -12,10 +12,10 @@ import {
   Alert,
   Row,
   Col,
-  InputGroup,
   Nav,
+  Spinner,
 } from "react-bootstrap";
-import { Eye, EyeSlash } from "react-bootstrap-icons";
+import FormInput from "../../components/FormInput";
 
 const Register = () => {
   const { error, isLoading, register, toast } = useRegister();
@@ -59,105 +59,46 @@ const Register = () => {
               {toast && <Alert variant="primary">{toast}</Alert>}
 
               <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={!!(formik.touched.name && formik.errors.name)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.name}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <FormInput
+                  label="Name"
+                  name="name"
+                  type="text"
+                  formik={formik}
+                />
+                <FormInput
+                  label="Email"
+                  name="email"
+                  type="email"
+                  formik={formik}
+                />
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    name="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={!!(formik.touched.email && formik.errors.email)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.email}
-                  </Form.Control.Feedback>
-                </Form.Group>
+                <FormInput
+                  label="Password"
+                  name="password"
+                  type="password"
+                  formik={formik}
+                  showPasswordToggle
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                />
 
-                {/* Password Field with Toggle */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <InputGroup>
-                    <Form.Control
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      name="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      isInvalid={
-                        !!(formik.touched.password && formik.errors.password)
-                      }
-                    />
-                    <Button
-                      variant="outline-light"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeSlash /> : <Eye />}
-                    </Button>
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.password}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
-
-                {/* Confirm Password Field with Toggle */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <InputGroup>
-                    <Form.Control
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Confirm password"
-                      name="confirmPassword"
-                      value={formik.values.confirmPassword}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      isInvalid={
-                        !!(
-                          formik.touched.confirmPassword &&
-                          formik.errors.confirmPassword
-                        )
-                      }
-                    />
-                    <Button
-                      variant="outline-light"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      {showConfirmPassword ? <EyeSlash /> : <Eye />}
-                    </Button>
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.confirmPassword}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
+                <FormInput
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  formik={formik}
+                  showPasswordToggle
+                  showPassword={showConfirmPassword}
+                  setShowPassword={setShowConfirmPassword}
+                />
 
                 <div className="d-flex gap-2">
-                  <Button
-                    variant="outline-light"
-                    size="sm"
-                    type="submit"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Register"}
+                  <Button variant="outline-light" size="sm" type="submit">
+                    {isLoading ? (
+                      <Spinner animation="border" size="sm" />
+                    ) : (
+                      "Save"
+                    )}
                   </Button>
                   <Button
                     variant="outline-light"
