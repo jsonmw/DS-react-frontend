@@ -12,3 +12,7 @@ export const saveOrUpdateDebt = (debt: Debt) => {
 
     return apiClient.post<Debt>(`/new`, debt);
 }
+
+export const getDebtByDebtId = (id : number) => {
+    return apiClient.get<Debt>(`/debts/${id}`);
+}
