@@ -6,6 +6,7 @@ import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import Footer from "../components/Footer";
 import Navbar from "../components/AppNavbar";
+import NewDebt from "../pages/debts/NewDebt";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/new"
+              element={
+                <ProtectedRoute>
+                  <NewDebt />
                 </ProtectedRoute>
               }
             />

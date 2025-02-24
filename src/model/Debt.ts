@@ -1,5 +1,5 @@
 export interface Debt {
-    id: number;
+    id?: number;
     name: string;
     debtType: string;
     apr: number;

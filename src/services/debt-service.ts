@@ -6,7 +6,7 @@ export const getDebts = () => {
 }
 
 export const saveOrUpdateDebt = (debt: Debt) => {
-    if(debt.id !== undefined || debt.id !== null) {
+    if(debt.id) {
         return apiClient.put<Debt>(`/debts/${debt.id}`, debt);
     }
 
