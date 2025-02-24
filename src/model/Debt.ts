@@ -1,8 +1,10 @@
 export interface Debt {
-    id: number;
+    id?: number;
     name: string;
     debtType: string;
     apr: number;
     balance: number;
     description: string;
+    cardType?: string,
+    loanTerms?: string,
 }

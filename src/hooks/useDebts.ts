@@ -1,0 +1,41 @@
+import { useCallback, useEffect, useState } from "react";
+import { Debt } from "../model/Debt";
+import { getDebts } from "../services/debt-service";
+
+const useDebts = () => {
+  const [debts, setDebts] = useState<Debt[]>([]);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setLoader] = useState<boolean>(false);
+
+  const fetchDebts = useCallback(async () => {
+    try {
+      setError("");
+      setLoader(true);
+
+      const response = await getDebts();
+
+      if (!response?.data) {
+        throw new Error("Attempt to query debts failed.");
+      }
+      // stuff
+      console.log("Received ", JSON.stringify(response.data));
+      setDebts(response.data);
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message ||
+          error.message ||
+          "Attempt to query debts failed."
+      );
+    } finally {
+      setLoader(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchDebts();
+  }, [fetchDebts]);
+
+  return { debts, error, isLoading, refresh: fetchDebts };
+};
+
+export default useDebts;
