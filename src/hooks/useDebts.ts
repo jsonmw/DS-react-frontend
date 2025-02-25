@@ -6,6 +6,7 @@ const useDebts = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setLoader] = useState<boolean>(false);
+  const errorResponse = "Attempt to query debts failed.";
 
   const fetchDebts = useCallback(async () => {
     try {
@@ -15,18 +16,14 @@ const useDebts = () => {
       const response = await getDebts();
 
       if (!response?.data) {
-        throw new Error("Attempt to query debts failed.");
+        throw new Error(errorResponse);
       }
       console.log(
         `Debt query successful. ${response.data.length} debts retrieved`
       );
       setDebts(response.data);
     } catch (error: any) {
-      setError(
-        error.response?.data?.message ||
-          error.message ||
-          "Attempt to query debts failed."
-      );
+      setError(error.response?.data?.message || error.message || errorResponse);
     } finally {
       setLoader(false);
     }

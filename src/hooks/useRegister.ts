@@ -8,6 +8,7 @@ export const useRegister = () => {
   const [isLoading, setLoader] = useState<boolean>(false);
   const [toast, setToast] = useState<string>("");
   const { updateAuth } = useAuthContext();
+  const errorResponse = "Failed to create user account";
 
   const register = useCallback(
     async (userAccount: UserAccount) => {
@@ -18,7 +19,7 @@ export const useRegister = () => {
 
         const response = await createUserAccount(userAccount);
         if (response?.status !== 201) {
-          throw new Error("Failed to create user account");
+          throw new Error(errorResponse);
         }
 
         setToast("New user account has been successfully created");
@@ -30,7 +31,7 @@ export const useRegister = () => {
         });
 
         if (!loginResponse?.data?.token) {
-          throw new Error("New user login failed");
+          throw new Error(errorResponse);
         }
 
         localStorage.setItem("user", JSON.stringify(loginResponse.data));
@@ -40,9 +41,7 @@ export const useRegister = () => {
         return true;
       } catch (error: any) {
         setError(
-          error.response?.data?.message ||
-            error.message ||
-            "Failed to create user account"
+          error.response?.data?.message || error.message || errorResponse
         );
         return false;
       } finally {

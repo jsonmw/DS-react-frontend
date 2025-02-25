@@ -8,6 +8,7 @@ export const useLogout = () => {
   const [isLoading, setLoader] = useState<boolean>(false);
   const navigate = useNavigate();
   const { updateAuth } = useAuthContext();
+  const errorResponse = "Logout failed. Please try again.";
 
   const logout = useCallback(async () => {
     setLoader(true);
@@ -16,7 +17,7 @@ export const useLogout = () => {
     const token = user ? JSON.parse(user).token : null;
 
     if (!token) {
-      setError("No user logged in");
+      setError(errorResponse);
       setLoader(false);
       return;
     }
@@ -29,11 +30,11 @@ export const useLogout = () => {
         updateAuth(false);
         navigate("/");
       } else {
-        setError("Unexpected response during logout");
+        setError(errorResponse);
       }
     } catch (error) {
       console.error("Logout error:", error);
-      setError("Logout failed. Please try again.");
+      setError(errorResponse);
     } finally {
       setLoader(false);
     }
