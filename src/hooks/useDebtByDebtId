@@ -1,0 +1,41 @@
+import { useEffect, useState } from "react";
+import { Debt } from "../model/Debt";
+import { getDebtByDebtId } from "../services/debt-service";
+
+const useDebtByDebtId = (id: number) => {
+  const [debt, setDebt] = useState<Debt | undefined>();
+  const [errors, setError] = useState<string>("");
+  const [isLoading, setLoader] = useState<boolean>(false);
+  const errorResponse = "Attempt to retrieve debt failed.";
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchDebt = async () => {
+      try {
+        setError("");
+        setLoader(true);
+
+        const response = await getDebtByDebtId(id);
+
+        if (!response?.data) {
+          throw new Error(errorResponse);
+        }
+
+        console.log(`Debt query successful. ${response.data.name} retrieved.`);
+        setDebt(response.data);
+      } catch (error: any) {
+        setError(
+          error.response?.data?.message || error.message || errorResponse
+        );
+      } finally {
+        setLoader(false);
+      }
+    };
+    fetchDebt();
+  }, [id]);
+
+  return { debt, errors, isLoading };
+};
+
+export default useDebtByDebtId;
