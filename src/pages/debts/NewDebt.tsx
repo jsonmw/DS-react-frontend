@@ -88,7 +88,7 @@ const NewDebt = () => {
     return (
       <>
         <FormInput label="APR" name="apr" type="number" formik={formik} />
-        
+
         <FormInput
           label="Balance"
           name="balance"
@@ -102,45 +102,18 @@ const NewDebt = () => {
           formik={formik}
         />
 
-        {/* {formik.values.debtType === "CARD" && (
-          <Form.Group className="mb-3">
-            <Form.Label>Card Type</Form.Label>
-            <Form.Select
-              name="cardType"
-              value={formik.values.cardType}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isInvalid={!!(formik.touched.cardType && formik.errors.cardType)}
-            >
-              <option value="">Select a Card Type</option>
-              {cardTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.cardType}
-            </Form.Control.Feedback>
-          </Form.Group>
-        )} */}
+        {formik.values.debtType === "CARD" && (
+          <FormInput label="Card Type" name="cardType" formik={formik} />
+        )}
 
-<FormInput
-                  label="Card Type"
-                  name="cardType"
-                  formik={formik}
-                  options={cardTypes}
-                />
-
-          {/* Loan Term Input (Only for LOAN Type) */}
-          {formik.values.debtType === "LOAN" && (
-            <FormInput
-              label="Loan Term"
-              name="loanTerms"
-              formik={formik}
-              loanTermUnitOptions={["months", "years"]}
-            />
-          )}
+        {formik.values.debtType === "LOAN" && (
+          <FormInput
+            label="Loan Term"
+            name="loanTerms"
+            formik={formik}
+            loanTermUnitOptions={["months", "years"]}
+          />
+        )}
       </>
     );
   };
