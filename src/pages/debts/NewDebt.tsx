@@ -82,6 +82,7 @@ const NewDebt = () => {
     validationSchema: debtValidationSchema,
   });
 
+  // Displays conditional options depending on Debt Type
   const renderDebtSpecificFields = () => {
     if (!formik.values.debtType) return null;
 
@@ -103,7 +104,12 @@ const NewDebt = () => {
         />
 
         {formik.values.debtType === "CARD" && (
-          <FormInput label="Card Type" name="cardType" formik={formik} />
+          <FormInput
+            label="Card Type"
+            name="cardTypes"
+            formik={formik}
+            options={cardTypes}
+          />
         )}
 
         {formik.values.debtType === "LOAN" && (
@@ -128,19 +134,20 @@ const NewDebt = () => {
               {error && <Alert variant="danger">{error}</Alert>}
 
               <Form key={formik.values.debtType} onSubmit={formik.handleSubmit}>
-                {/* Name */}
                 <FormInput
-                  label="Name"
+                  label="Debt Name"
                   name="name"
                   type="text"
                   formik={formik}
                 />
+
                 <FormInput
                   label="Debt Type"
                   name="debtType"
                   formik={formik}
                   options={debtTypes}
                 />
+                {/* Render conditional options after Debt Type is selected */}
                 {renderDebtSpecificFields()}
 
                 <div className="d-flex gap-2">
@@ -151,6 +158,7 @@ const NewDebt = () => {
                       "Save"
                     )}
                   </Button>
+
                   <Button
                     variant="outline-light"
                     size="sm"
