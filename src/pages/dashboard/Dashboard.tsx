@@ -41,7 +41,7 @@ const Dashboard = () => {
       <Row>
         {debts.map((debt) => (
           <Col key={debt.name} md={6} lg={4}>
-            <DebtCard debt ={debt} />
+            <DebtCard debt ={debt} refresh={refresh} />
           </Col>
         ))}
       </Row>
