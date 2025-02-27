@@ -7,4 +7,6 @@ export interface Debt {
     description: string;
     cardType?: string,
     loanTerms?: string,
+    createdAt?: string,
+    updatedAt?: string
 }

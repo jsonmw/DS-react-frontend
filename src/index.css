@@ -28,7 +28,6 @@ a {
   overflow-y: auto; /* Enable scrolling when needed */
 }
 
-
 nav {
   background-color: #030d0b !important;
   color: white;
@@ -76,6 +75,22 @@ footer {
   transition: background-color 0.3s ease-in-out;
 }
 
-.debt-card:hover {
-  background-color: #ffc107 !important;
+.debt-card:hover,
+.debt-card.active-card {
+  background-color: #ffc107 !important; /* Stay yellow when modal is open */
+}
+
+.debt-card:focus,
+.debt-card:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.debt-card.active {
+  background-color: #ffc107 !important; /* Keep yellow */
+}
+
+.modal .debt-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
