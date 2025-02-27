@@ -106,7 +106,7 @@ const NewDebt = () => {
         {formik.values.debtType === "CARD" && (
           <FormInput
             label="Card Type"
-            name="cardTypes"
+            name="cardType"
             formik={formik}
             options={cardTypes}
           />
