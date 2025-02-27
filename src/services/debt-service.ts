@@ -16,3 +16,11 @@ export const saveOrUpdateDebt = (debt: Debt) => {
 export const getDebtByDebtId = (id : number) => {
     return apiClient.get<Debt>(`/debts/${id}`);
 }
+
+export const deleteDebt = (debt: Debt ) => {
+    if(debt) {
+        return apiClient.delete<void>(`/debts/${debt.id}`);
+    } else {
+        throw new Error ("Unable to delete debt.");
+    }
+}

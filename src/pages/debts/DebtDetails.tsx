@@ -6,9 +6,10 @@ import { Debt } from "../../model/Debt";
 interface DebtDetailsProps {
   debt: Debt;
   onClose: () => void;
+  refresh: () => void;
 }
 
-const DebtDetails: React.FC<DebtDetailsProps> = ({ debt, onClose }) => {
+const DebtDetails: React.FC<DebtDetailsProps> = ({ debt, onClose, refresh }) => {
   return (
     <Modal show onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
@@ -20,7 +21,7 @@ const DebtDetails: React.FC<DebtDetailsProps> = ({ debt, onClose }) => {
             <SingleDebt debt={debt} />
           </Col>
           <Col md={5}>
-            <DebtActions debt={debt} />
+            <DebtActions debt={debt} refresh={refresh} />
           </Col>
         </Row>
       </Modal.Body>

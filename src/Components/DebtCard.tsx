@@ -5,7 +5,7 @@ import CurrencyUtil from "../utils/CurrencyUtil";
 import DebtDetails from "../pages/debts/DebtDetails";
 
 
-const DebtCard: React.FC<{ debt: Debt }> = ({ debt }) => {
+const DebtCard: React.FC<{ debt: Debt; refresh: () => void }> = ({ debt, refresh }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleShow = () => setIsModalOpen(true);
@@ -29,7 +29,7 @@ const DebtCard: React.FC<{ debt: Debt }> = ({ debt }) => {
         </Card.Body>
       </Card>
 
-      {isModalOpen && <DebtDetails debt={debt} onClose={handleClose} />}
+      {isModalOpen && <DebtDetails debt={debt} onClose={handleClose} refresh = {refresh} />}
     </>
   );
 };
