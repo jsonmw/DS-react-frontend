@@ -6,7 +6,7 @@ import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import Footer from "../components/Footer";
 import Navbar from "../components/AppNavbar";
-import NewDebt from "../pages/debts/NewDebt";
+import DebtForm from "../pages/debts/DebtForm";
 
 const AppRoutes = () => {
   return (
@@ -27,7 +27,15 @@ const AppRoutes = () => {
               path="/new"
               element={
                 <ProtectedRoute>
-                  <NewDebt />
+                  <DebtForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/update"
+              element={
+                <ProtectedRoute>
+                  <DebtForm />
                 </ProtectedRoute>
               }
             />

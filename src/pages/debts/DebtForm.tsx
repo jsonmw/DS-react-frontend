@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Debt } from "../../model/Debt";
 import { getDebtByDebtId, saveOrUpdateDebt } from "../../services/debt-service";
 import { useFormik } from "formik";
@@ -18,8 +18,11 @@ import {
 import { cardTypes, debtTypes } from "../../utils/Constants";
 import FormInput from "../../components/FormInput";
 
-const NewDebt = () => {
-  const { id } = useParams<{ id: string }>();
+const DebtForm = () => {
+  // const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const passedDebt = location.state?.debt;
+
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
   const [isLoading, setLoader] = useState<boolean>(false);
@@ -33,46 +36,52 @@ const NewDebt = () => {
     loanTerms: "",
   });
 
-  // Check if a debt ID was passed and populate fields with existing data if so
+  // Check if a debt was passed and populate fields with existing data if so
   useEffect(() => {
-    const fetchDebt = async () => {
-      if (!id) return;
-      setLoader(true);
+    if (!passedDebt) return;
+    setLoader(true);
 
-      try {
-        const debtId = parseInt(id);
-        const response = await getDebtByDebtId(debtId);
-        if (response?.data) {
-          setInitialValues(response.data);
-          formik.setValues(response.data);
-        }
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoader(false);
-      }
-    };
+    setInitialValues({
+      ...passedDebt,
+      loanTerms: passedDebt.terms || "",
+    });
 
-    fetchDebt();
-  }, [id]);
+    formik.setValues({
+      ...passedDebt,
+      loanTerms: passedDebt.terms || "",
+    });
+
+    setLoader(false);
+  }, [passedDebt]);
 
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
     onSubmit: (values: Debt) => {
+      let loanTermValue = "";
+      let loanTermUnit = "";
+
+      if (values.debtType === "LOAN" && values.loanTerms) {
+        const splitTerms = values.loanTerms.split(" ");
+        loanTermValue = splitTerms[0] || "";
+        loanTermUnit = splitTerms[1] || "";
+      }
+
       const filteredValues = {
         ...values,
-        cardType: values.debtType === "CARD" ? values.cardType : undefined,
-        loanTerms: values.debtType === "LOAN" ? values.loanTerms : undefined,
+        cardType:
+          values.debtType === "CARD"
+            ? values.cardType?.toUpperCase()
+            : undefined,
+        loanTerms:
+          values.debtType === "LOAN"
+            ? `${loanTermValue} ${loanTermUnit}`
+            : undefined,
       };
 
       saveOrUpdateDebt(filteredValues)
-        .then((response) => {
-          if (response && response.status === 201) {
-            navigate("/");
-          } else if (response && response.status === 200) {
-            navigate(`/view/${id}`);
-          }
+        .then(() => {
+          navigate("/");
         })
         .catch((error: any) => {
           console.log(error);
@@ -185,4 +194,4 @@ const NewDebt = () => {
   );
 };
 
-export default NewDebt;
+export default DebtForm;

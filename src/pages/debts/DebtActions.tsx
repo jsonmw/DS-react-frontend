@@ -2,19 +2,22 @@ import { useState } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import { Debt } from "../../model/Debt";
 import { deleteDebt } from "../../services/debt-service";
+import { Link } from "react-router-dom";
 
-const DebtActions: React.FC<{ debt: Debt; refresh: () => void }> = ({ debt, refresh }) => {
+const DebtActions: React.FC<{ debt: Debt; refresh: () => void }> = ({
+  debt,
+  refresh,
+}) => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handlePlanPayments = () => alert(`Plan payments for ${debt.name}`);
-  const handleUpdate = () => alert(`Update ${debt.name}`);
   const handleDelete = async () => {
     if (!debt || !debt?.id) {
-        console.error("Error deleting debt.");
-        return;
-      }
-      await deleteDebt(debt);
-      refresh();
+      console.error("Error deleting debt.");
+      return;
+    }
+    await deleteDebt(debt);
+    refresh();
   };
 
   return (
@@ -32,12 +35,16 @@ const DebtActions: React.FC<{ debt: Debt; refresh: () => void }> = ({ debt, refr
             </Button>
           </ListGroup.Item>
           <ListGroup.Item>
-            <Button variant="dark" onClick={handleUpdate} className="w-100">
+            <Link
+              to={`/update`}
+              state={{ debt }}
+              className="btn btn-dark w-100"
+            >
               Update debt info
-            </Button>
+            </Link>
           </ListGroup.Item>
-          
-            {/* handle delete confirmation */}
+
+          {/* handle delete confirmation */}
           <ListGroup.Item>
             {showConfirm ? (
               <div className="d-flex justify-content-between">

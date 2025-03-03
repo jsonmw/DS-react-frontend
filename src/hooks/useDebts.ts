@@ -21,6 +21,7 @@ const useDebts = () => {
       console.log(
         `Debt query successful. ${response.data.length} debts retrieved`
       );
+      console.log("Debt info: ", response.data);
       setDebts(response.data);
     } catch (error: any) {
       setError(error.response?.data?.message || error.message || errorResponse);
